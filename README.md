@@ -28,18 +28,21 @@ CheckBox(text:"This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!Th
 
 # TODO:
 
-1. Add event at the end, for example:
+1. Pass initial value for @State
+2. Add event at the end, for example:
 
 ```
     CheckBox(Text("This is a checkbox")).onCheck() {
 
     }
 ```
-2. Wrap text in {} at the end, for example:
+3. Wrap text in {} at the end, for example:
 
 ```
     CheckBox() {
         Text("This is a checkbox")
     }.position(.right)
 ```
+
+
 

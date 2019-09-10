@@ -41,7 +41,7 @@ public struct CheckBox: View {
   var text: String
   var textPosition: TextPosition = .left
   
-  @State private var isChecked: Bool = false
+  @State private var isChecked: Bool = false  
   var appearance: Appearance
   var onCheck: ((Bool) -> Void)?
   

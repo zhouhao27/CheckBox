@@ -6,9 +6,7 @@ A SwiftUI CheckBox component.
 
 # Installation
 
-Install through Swift Package Manager by add package at url:
-
-https://github.com/zhouhao27/CheckBox/tree/master/CheckBox
+Install through Swift Package Manager.
 
 # Example
 

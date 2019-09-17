@@ -43,5 +43,18 @@ CheckBox(isChecked:true,appearance: style, onCheck:{
     }.appearance(MyStyle())
 ```
 
+Please refer to [Composable styling in SwiftUI](https://mecid.github.io/2019/08/28/composable-styling-in-swiftui/)
 
+2. Add event callback at the endm for example:
+
+```
+CheckBox() {
+    Text("This is a checkbox")
+  }.onCheck {
+    checked in
+    print("Is checked: \(checked)")
+  }
+}
+
+```
 

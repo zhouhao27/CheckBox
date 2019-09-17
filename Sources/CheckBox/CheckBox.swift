@@ -9,41 +9,43 @@
 import SwiftUI
 
 @available(iOS 13, *)
-public struct CheckBox: View {
-  
-  public struct Appearance {
-    public enum Style {
-      case big
-      case small
-      case medium
-    }
-    
-    var color: Color
-    var backgroundColor: Color
-    var cornerRadius: CGFloat
-    var borderWidth: CGFloat
-    var style: Style
-    
-    public init(color: Color = Color.primary, backgroundColor: Color = Color.clear, cornerRadius: CGFloat = 5.0, borderWidth: CGFloat = 5.0, style: Style = .medium) {
-      self.color = color
-      self.backgroundColor = backgroundColor
-      self.cornerRadius = cornerRadius
-      self.borderWidth = borderWidth
-      self.style = style
-    }
+public struct CheckBoxAppearance {
+  public enum Style {
+    case big
+    case small
+    case medium
   }
-
-  public enum TextPosition {
+  
+  public enum ContentPosition {
     case left
     case right
   }
+
+  var color: Color
+  var backgroundColor: Color
+  var cornerRadius: CGFloat
+  var borderWidth: CGFloat
+  var style: Style
+  var position: ContentPosition
   
-  var text: String
-  var textPosition: TextPosition = .left
-  
-  @State private var isChecked: Bool = false  
-  var appearance: Appearance
+  public init(color: Color = Color.primary, backgroundColor: Color = Color.clear, cornerRadius: CGFloat = 5.0, borderWidth: CGFloat = 5.0, style: Style = .medium, contentPosition: ContentPosition = .left) {
+    self.color = color
+    self.backgroundColor = backgroundColor
+    self.cornerRadius = cornerRadius
+    self.borderWidth = borderWidth
+    self.style = style
+    self.position = contentPosition
+  }
+}
+
+@available(iOS 13, *)
+public struct CheckBox<Content>: View where Content: View {
+    
+  @State private var isChecked: Bool = false
+  private var isCheckedValue: Bool  // passed by init
+  var appearance: CheckBoxAppearance
   var onCheck: ((Bool) -> Void)?
+  var content: Content
   
   private func clicked() {
     self.isChecked.toggle()
@@ -52,13 +54,11 @@ public struct CheckBox: View {
     }
   }
   
-  public init(text: String, textPosition: TextPosition = .left, isChecked: Bool = false, appearance: Appearance = Appearance(), onCheck: ((Bool) -> Void)? = nil) {
-    self.text = text
-    self.textPosition = textPosition
-    // TODO: this doesn't work
-//    self.isChecked = isChecked
+  public init(isChecked: Bool = false, appearance: CheckBoxAppearance = CheckBoxAppearance(), onCheck: ((Bool) -> Void)? = nil,@ViewBuilder content: @escaping () -> Content) {
+    self.isCheckedValue = isChecked
     self.appearance = appearance
     self.onCheck = onCheck
+    self.content = content()
   }
     
   public var body: some View {
@@ -66,8 +66,8 @@ public struct CheckBox: View {
     let padding: CGFloat = appearance.style == .big ? 10: (appearance.style == .medium ? 8 : 5)
     
     return HStack {
-      if textPosition == .left {
-        Text(text)
+      if self.appearance.position == .left {
+        content
       }
       Button(action: {
         self.clicked()
@@ -86,9 +86,11 @@ public struct CheckBox: View {
         RoundedRectangle(cornerRadius: appearance.cornerRadius)
           .stroke(appearance.color, lineWidth: appearance.borderWidth)
       )
-      if textPosition == .right {
-        Text(text)
+      if self.appearance.position == .right {
+        content
       }
+    }.onAppear() {
+      self.isChecked = self.isCheckedValue
     }
   }
 }
@@ -96,6 +98,9 @@ public struct CheckBox: View {
 @available(iOS 13, *)
 struct CheckBox_Previews: PreviewProvider {
   static var previews: some View {
-    CheckBox(text: "Test")
+    
+    CheckBox() {
+      Text("Great!")
+    }
   }
 }

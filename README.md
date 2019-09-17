@@ -13,35 +13,34 @@ Install through Swift Package Manager.
 ## Example 1:
 
 ```
-CheckBox(text:"This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!", textPosition: .right,isChecked: false, appearance: style ).font(.largeTitle).padding().foregroundColor(.yellow).lineLimit(10)
+let style = CheckBoxAppearance(color: .green, backgroundColor: .pink, cornerRadius: 5, borderWidth: 5, style: .big, contentPosition: .right)
+
+CheckBox(isChecked: false, appearance: style) {
+  Text("This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!").font(.largeTitle).padding().foregroundColor(.yellow).lineLimit(10)
+}
 ```
 
 ## Example 2:
 
 ```
-      CheckBox(text:"This is another checkbox", isChecked:true,appearance: style2, onCheck:{
-        isChecked in
-        print(isChecked)
-      }).font(.body).padding()
-```
+let style = CheckBoxAppearance(color: .blue, backgroundColor: .clear, cornerRadius: 5, borderWidth: 5, style: .small)
 
+CheckBox(isChecked:true,appearance: style, onCheck:{
+  isChecked in
+  print(isChecked)
+}) {
+  Text("This is another checkbox").font(.body).padding()
+}
+```
 
 # TODO:
 
-1. Pass initial value for @State
-2. Add event at the end, for example:
-
-```
-    CheckBox(Text("This is a checkbox")).onCheck() {
-
-    }
-```
-3. Wrap text in {} at the end, for example:
+1. Wrap the style at the end, for example:
 
 ```
     CheckBox() {
         Text("This is a checkbox")
-    }.position(.right)
+    }.appearance(MyStyle())
 ```
 
 

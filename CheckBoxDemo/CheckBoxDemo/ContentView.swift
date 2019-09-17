@@ -10,20 +10,25 @@ import SwiftUI
 import CheckBox
 
 struct ContentView: View {
-  let style = CheckBox.Appearance(color: .green, backgroundColor: .pink, cornerRadius: 5, borderWidth: 5, style: .big)
+  let style = CheckBoxAppearance(color: .green, backgroundColor: .pink, cornerRadius: 5, borderWidth: 5, style: .big, contentPosition: .right)
 
-  let style2 = CheckBox.Appearance(color: .blue, backgroundColor: .clear, cornerRadius: 5, borderWidth: 5, style: .small)
+  let style2 = CheckBoxAppearance(color: .blue, backgroundColor: .clear, cornerRadius: 5, borderWidth: 5, style: .small)
 
   var body: some View {
-    
+        
     VStack {
-      CheckBox(text:"This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!", textPosition: .right,isChecked: false, appearance: style ).font(.largeTitle).padding().foregroundColor(.yellow).lineLimit(10)
+      CheckBox(isChecked: false, appearance: style) {
+        Text("This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!This is a checkbox!!!").font(.largeTitle).padding().foregroundColor(.yellow).lineLimit(10)
+      }
       
-      CheckBox(text:"This is another checkbox", isChecked:true,appearance: style2, onCheck:{
+      CheckBox(isChecked:true,appearance: style2, onCheck:{
         isChecked in
         print(isChecked)
-      }).font(.body).padding()
+      }) {
+        Text("This is another checkbox").font(.body).padding()
+      }
     }
+
   }
 }
 
